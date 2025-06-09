@@ -14,7 +14,7 @@ function App() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3001/player-odds?name=${encodeURIComponent(name)}`);
+      const res = await fetch(`https://fantasybackend-psi.vercel.app/api/player-odds?name=${encodeURIComponent(name)}`);
       const data = await res.json();
       if (data.error) {
         setError(data.error);
