@@ -1,38 +1,103 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1f2937, #111827);
   min-height: 100vh;
+  padding: 2rem;
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #60a5fa;
+  text-align: center;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.button {
+  background-color: #2563eb;
   color: white;
+  border: none;
+  padding: 0.6rem 1.8rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+.button:hover {
+  background-color: #1d4ed8;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error {
+  color: #f87171;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.card {
+  background-color: #1e40af;
+  padding: 1.8rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  margin-top: 1.5rem;
+  max-width: 520px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.6;
+  font-size: 1.15rem;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.player-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #60a5fa;
+}
+
+.meter-container {
+  margin-top: 1.5rem;
+}
+
+.meter-bar-background {
+  width: 100%;
+  height: 18px;
+  background: #3b82f6;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(255,255,255,0.4);
+}
+
+.meter-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  transition: width 0.6s ease;
+}
+
+.meter-text {
+  margin-top: 0.4rem;
+  font-weight: 600;
+  color: #bbf7d0;
 }
