@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useFplImages } from '../hooks/useFplImages';
 
 export default function PlayerDetails() {
   const { name } = useParams();
   const [player, setPlayer] = useState(null);
   const [error, setError] = useState(null);
-  const imageMap = useFplImages();
+  const [photo, setPhoto] = useState('');
 
   useEffect(() => {
     fetch(`https://fantasybackend-psi.vercel.app/player?name=${encodeURIComponent(name)}`)
@@ -14,8 +13,25 @@ export default function PlayerDetails() {
         if (!res.ok) throw new Error('Player not found');
         return res.json();
       })
-      .then(data => setPlayer(data))
+      .then(data => {
+        setPlayer(data);
+      })
       .catch(err => setError(err.message));
+  }, [name]);
+
+  useEffect(() => {
+    if (!name) return;
+    fetch(`https://v3.football.api-sports.io/players?search=${encodeURIComponent(name)}&league=39&season=2023`, {
+      headers: {
+        'x-apisports-key': 'ac73f34a4e2b591d2c12ad067e4a157a'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        const img = data.response?.[0]?.player?.photo;
+        if (img) setPhoto(img);
+      })
+      .catch(err => console.error('Image fetch error:', err));
   }, [name]);
 
   const getInvestmentVerdict = (points) => {
@@ -29,15 +45,14 @@ export default function PlayerDetails() {
   if (!player) return <div className="p-4">Loading...</div>;
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
-  const key = player.Player?.toLowerCase().trim();
-  const photo = imageMap[key] || `https://ui-avatars.com/api/?name=${encodeURIComponent(player.Player)}&background=0D8ABC&color=fff&size=110`;
+  const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(player.Player)}&background=0D8ABC&color=fff&size=110`;
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white bg-opacity-5 shadow-md rounded">
       <Link to="/" className="text-blue-500 hover:underline">&larr; Back</Link>
       <div className="flex items-center space-x-6 mt-6">
         <img
-          src={photo}
+          src={photo || fallback}
           alt={player.Player}
           className="w-28 h-36 object-cover rounded border"
         />
