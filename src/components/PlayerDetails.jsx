@@ -21,60 +21,51 @@ export default function PlayerDetails() {
     if (!name) return;
     fetch(`https://fantasybackend-psi.vercel.app/player-photo?name=${encodeURIComponent(name)}`)
       .then(res => res.json())
-      .then(data => {
-        console.log("Photo API response:", data);
-        if (data.photo) {
-          setPhoto(data.photo);
-          console.log("Setting photo to", data.photo);
-        }
-        else{
-            console.log("No photo in response");
-        }
-      })
+      .then(data => setPhoto(data.photo || ''))
       .catch(err => console.error('Image fetch error:', err));
   }, [name]);
 
   const getInvestmentVerdict = (points) => {
-    if (points >= 150) return { label: '🔥 Must Have', color: 'text-green-600', bar: 'fantasy-excellent' };
-    if (points >= 100) return { label: '✅ Good Pick', color: 'text-blue-500', bar: 'fantasy-good' };
-    if (points >= 60) return { label: '🤔 Average', color: 'text-yellow-500', bar: 'fantasy-mid' };
-    return { label: '❌ Avoid', color: 'text-red-500', bar: 'fantasy-low' };
+    if (points >= 150) return { label: '🔥 Must Have', color: 'text-green-400', bar: 'fantasy-excellent' };
+    if (points >= 100) return { label: '✅ Good Pick', color: 'text-blue-400', bar: 'fantasy-good' };
+    if (points >= 60) return { label: '🤔 Average', color: 'text-yellow-400', bar: 'fantasy-mid' };
+    return { label: '❌ Avoid', color: 'text-red-400', bar: 'fantasy-low' };
   };
 
-  if (error) return <div className="p-4 text-red-600">Error: {error}</div>;
-  if (!player) return <div className="p-4">Loading...</div>;
+  if (error) return <div className="p-4 text-red-500 text-center">Error: {error}</div>;
+  if (!player) return <div className="p-4 text-white text-center">Loading...</div>;
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
   const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(player.Player)}&background=0D8ABC&color=fff&size=110`;
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white bg-opacity-5 shadow-md rounded">
-      <Link to="/" className="text-blue-500 hover:underline">&larr; Back</Link>
-      <div className="flex items-center space-x-6 mt-6">
+    <div className="p-6 max-w-2xl mx-auto bg-[#1e1e1e] rounded-xl shadow-lg text-center text-white">
+      <Link to="/" className="text-blue-400 hover:underline mb-4 inline-block">&larr; Back</Link>
+      <div className="flex flex-col items-center mt-4">
         <img
           src={photo || fallback}
           onError={(e) => { e.target.onerror = null; e.target.src = fallback; }}
           alt={player.Player}
-          className="w-28 h-36 object-cover rounded border"
+          className="w-32 h-40 object-cover rounded-lg border mb-4"
         />
-        <div>
-          <h2 className="text-3xl font-bold mb-2 text-white">{player.Player}</h2>
-          <p className="text-gray-400"><strong>Team:</strong> {player.Team || 'N/A'}</p>
+        <h2 className="text-3xl font-bold mb-1">{player.Player}</h2>
+        <p className="text-gray-400 mb-2"><strong>Team:</strong> {player.Team || 'N/A'}</p>
+        <div className="grid grid-cols-2 gap-4 mt-4 text-lg">
           <p><strong>Goals:</strong> {player.Gls}</p>
           <p><strong>Assists:</strong> {player.Ast}</p>
           <p><strong>Yellow Cards:</strong> {player.CrdY}</p>
           <p><strong>Red Cards:</strong> {player.CrdR}</p>
         </div>
-      </div>
-      <div className="mt-6 text-xl">
-        <p><strong>Fantasy Points:</strong> <span className="font-semibold">{player.fantasyPoints}</span></p>
-        <div className="fantasy-meter">
-          <div
-            className={`fantasy-meter-bar ${verdict.bar}`}
-            style={{ width: `${Math.min(player.fantasyPoints / 2, 100)}%` }}
-          ></div>
+        <div className="mt-6 w-full">
+          <p className="text-xl"><strong>Fantasy Points:</strong> <span className="font-bold">{player.fantasyPoints}</span></p>
+          <div className="fantasy-meter">
+            <div
+              className={`fantasy-meter-bar ${verdict.bar}`}
+              style={{ width: `${Math.min(player.fantasyPoints / 2, 100)}%` }}
+            ></div>
+          </div>
+          <p className={`mt-2 font-bold ${verdict.color}`}>{verdict.label}</p>
         </div>
-        <p className={`mt-2 font-bold ${verdict.color}`}>{verdict.label}</p>
       </div>
     </div>
   );

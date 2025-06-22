@@ -25,32 +25,44 @@ export default function PlayerList() {
   const totalPages = Math.ceil(filtered.length / pageSize);
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6 text-center">Premier League Fantasy Tracker</h1>
+    <div className="container text-center">
+      <h1 className="text-4xl font-bold mb-6 text-white">⚽ Premier League Fantasy Tracker</h1>
       <input
         type="text"
         placeholder="Search players..."
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="p-3 border w-full rounded mb-6 text-lg"
+        className="text-lg mb-6"
       />
       {loading ? (
-        <p>Loading players...</p>
+        <p className="text-white">Loading players...</p>
       ) : (
         <>
-          <ul className="divide-y rounded bg-white shadow">
+          <ul className="shadow mb-4">
             {paginated.map(player => (
-              <li key={player.Player} className="py-4 px-6 hover:bg-gray-50 transition">
-                <Link to={`/player/${encodeURIComponent(player.Player)}`} className="text-blue-700 font-semibold text-lg">
+              <li key={player.Player}>
+                <Link to={`/player/${encodeURIComponent(player.Player)}`} className="text-xl font-semibold text-blue-400 hover:text-blue-300 transition">
                   {player.Player}
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="flex justify-between items-center mt-6">
-            <button disabled={page === 1} onClick={() => setPage(p => p - 1)} className="btn">Previous</button>
-            <span className="text-gray-600">Page {page} of {totalPages}</span>
-            <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)} className="btn">Next</button>
+          <div className="flex justify-center items-center gap-6 mt-8">
+            <button
+              disabled={page === 1}
+              onClick={() => setPage(p => p - 1)}
+              className="btn"
+            >
+              ⬅ Previous
+            </button>
+            <span className="text-white text-lg">Page {page} of {totalPages}</span>
+            <button
+              disabled={page === totalPages}
+              onClick={() => setPage(p => p + 1)}
+              className="btn"
+            >
+              Next ➡
+            </button>
           </div>
         </>
       )}
