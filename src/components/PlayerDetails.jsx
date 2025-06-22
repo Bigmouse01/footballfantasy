@@ -22,9 +22,13 @@ export default function PlayerDetails() {
     fetch(`https://fantasybackend-psi.vercel.app/player-photo?name=${encodeURIComponent(name)}`)
       .then(res => res.json())
       .then(data => {
+        console.log("Photo API response:", data);
         if (data.photo) {
           setPhoto(data.photo);
-          console.log("Fetched photo:", data.photo);
+          console.log("Setting photo to", data.photo);
+        }
+        else{
+            console.log("No photo in response");
         }
       })
       .catch(err => console.error('Image fetch error:', err));
