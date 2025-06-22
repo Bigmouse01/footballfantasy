@@ -42,7 +42,7 @@ export default function PlayerDetails() {
 
       {/* Main Content */}
       <div className="text-center space-y-8 animate-fadeIn">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white">{player.Player}</h1>
+        <h2 className="text-5xl font-extrabold tracking-tight text-white">{player.Player}</h2>
         <a
           href={wikiLink}
           target="_blank"
@@ -62,7 +62,7 @@ export default function PlayerDetails() {
 
         {/* Player Insight */}
         <div className="px-4 py-3 bg-black/30 rounded-lg shadow-inner border border-gray-700 text-left text-sm sm:text-base">
-          <h2 className="font-semibold text-white text-lg mb-2">📊 Player Insight</h2>
+          <h3 className="font-semibold text-white text-lg mb-2">📊 Player Insight</h3>
           <p className="text-gray-300">
             {player.Player} has had a {player.fantasyPoints > 100 ? 'strong' : player.fantasyPoints > 60 ? 'moderate' : 'challenging'} season in the Premier League, contributing with {player.Gls} goal{player.Gls !== 1 ? 's' : ''} and {player.Ast} assist{player.Ast !== 1 ? 's' : ''}.
             {player.CrdY > 0 || player.CrdR > 0
@@ -74,7 +74,7 @@ export default function PlayerDetails() {
 
         {/* Performance Review */}
         <div className="px-4 py-3 bg-black/30 rounded-lg shadow-inner border border-gray-700 text-left text-sm sm:text-base">
-          <h2 className="font-semibold text-white text-lg mb-2">🔍 Performance Review</h2>
+          <h3 className="font-semibold text-white text-lg mb-2">🔍 Performance Review</h3>
           <p className="text-gray-300">
             Throughout the 2023 Premier League season, <strong>{player.Player}</strong> demonstrated a {player.Gls >= 10 ? 'clinical eye for goal' : player.Ast >= 8 ? 'creative presence in midfield' : 'modest impact'}.
             {player.Gls >= 10 && ` Scoring ${player.Gls} goals, they were among the top contributors for ${player.Team || 'their team'}.`}
