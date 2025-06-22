@@ -58,6 +58,14 @@ export default function PlayerDetails() {
           <p><span className="text-gray-300 font-semibold">🟨 Yellow Cards:</span> {player.CrdY}</p>
           <p><span className="text-gray-300 font-semibold">🟥 Red Cards:</span> {player.CrdR}</p>
         </div>
+        <div className="mt-6 px-4 py-3 bg-black/30 rounded-lg shadow-inner border border-gray-700 text-left text-sm sm:text-base">
+  <h3 className="font-semibold text-white text-lg mb-2">📊 Player Insight</h3>
+  <p className="text-gray-300">
+    {player.Player} has had a {player.fantasyPoints > 100 ? 'strong' : player.fantasyPoints > 60 ? 'moderate' : 'challenging'} season in the Premier League, contributing with {player.Gls} goal{player.Gls !== 1 ? 's' : ''} and {player.Ast} assist{player.Ast !== 1 ? 's' : ''}.
+    {player.CrdY > 0 || player.CrdR > 0 ? ` However, the player has also received ${player.CrdY} yellow and ${player.CrdR} red card${(player.CrdY + player.CrdR) > 1 ? 's' : ''}, which may affect consistency.` : ` Impressively, ${player.Player} maintained discipline throughout the season with no cards.`}
+    Overall, {player.Player.split(' ')[0]} could be {verdict.label === '❌ Avoid' ? 'a risky pick' : verdict.label === '🤔 Average' ? 'a decent rotation option' : 'a valuable fantasy asset'}.
+  </p>
+</div>
 
         <div className="mt-10">
           <p className="text-xl font-medium">Fantasy Points: <span className="font-semibold">{player.fantasyPoints}</span></p>
