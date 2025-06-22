@@ -1,85 +1,46 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-function PlayerList() {
+export default function PlayerList() {
   const [players, setPlayers] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const pageSize = 20;
 
   useEffect(() => {
-    const fetchPlayers = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`https://fantasybackend-psi.vercel.app/api/players?page=${page}`);
-        const data = await res.json();
-        setPlayers(data.players);
-        setFiltered(data.players);
-      } catch (err) {
-        console.error("Player list fetch error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPlayers();
-  }, [page]);
+    fetch('https://fantasybackend-psi.vercel.app/players')
+      .then(res => res.json())
+      .then(data => setPlayers(data));
+  }, []);
 
-  useEffect(() => {
-    const filteredList = players.filter((player) =>
-      player.name.toLowerCase().includes(search.toLowerCase())
-    );
-    setFiltered(filteredList);
-  }, [search, players]);
+  const filtered = players.filter(p => p.Name.toLowerCase().includes(search.toLowerCase()));
+  const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
+  const totalPages = Math.ceil(filtered.length / pageSize);
 
   return (
-    <div className="app-container">
-      <h1 className="title">Premier League Fantasy Players</h1>
-
+    <div className="p-4 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Premier League Players</h1>
       <input
         type="text"
-        placeholder="Search player..."
-        className="search-bar"
+        placeholder="Search players..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={e => setSearch(e.target.value)}
+        className="p-2 border w-full rounded mb-4"
       />
-
-      {loading ? (
-        <p>Loading players...</p>
-      ) : (
-        <table className="player-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Club</th>
-              <th>Position</th>
-              <th>Country</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((player, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/player/${encodeURIComponent(player.name)}`}>
-                    {player.name}
-                  </Link>
-                </td>
-                <td>{player.club}</td>
-                <td>{player.position}</td>
-                <td>{player.country}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      <div className="pagination">
-        <button onClick={() => setPage(page - 1)} disabled={page <= 1}>Prev</button>
-        <span>Page {page}</span>
-        <button onClick={() => setPage(page + 1)}>Next</button>
+      <ul className="divide-y">
+        {paginated.map(player => (
+          <li key={player.Name} className="py-2">
+            <Link to={`/player/${encodeURIComponent(player.Name)}`} className="text-blue-600 hover:underline">
+              {player.Name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="flex justify-between mt-4">
+        <button disabled={page === 1} onClick={() => setPage(p => p - 1)} className="btn">Previous</button>
+        <span>Page {page} of {totalPages}</span>
+        <button disabled={page === totalPages} onClick={() => setPage(p => p + 1)} className="btn">Next</button>
       </div>
     </div>
   );
 }
-
-export default PlayerList;

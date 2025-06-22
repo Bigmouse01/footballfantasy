@@ -1,60 +1,28 @@
-// === frontend/src/PlayerDetail.js ===
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 
-function PlayerDetail() {
+export default function PlayerDetails() {
   const { name } = useParams();
-  const [stats, setStats] = useState(null);
-  const [error, setError] = useState("");
+  const [player, setPlayer] = useState(null);
 
   useEffect(() => {
-    fetch(`https://fantasybackend-psi.vercel.app/api/player-odds?name=${encodeURIComponent(name)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) setError(data.error);
-        else setStats(data);
-      });
+    fetch(`https://fantasybackend-psi.vercel.app/player?name=${encodeURIComponent(name)}`)
+      .then(res => res.json())
+      .then(data => setPlayer(data));
   }, [name]);
 
-  const fantasyPercent = stats ? Math.min((stats.fantasyPoints / 100) * 100, 100) : 0;
+  if (!player) return <div className="p-4">Loading...</div>;
 
   return (
-    <div className="app-container">
-      <Link to="/" className="back-btn">← Back</Link>
-      {error && <p className="error">{error}</p>}
-      {stats && (
-        <div className="card">
-          <div className="player-header">
-            <img src={stats.photo} alt={stats.name} className="player-photo" />
-            <div>
-              <p><strong>👤 Name:</strong> {stats.name}</p>
-              <p><strong>🏟️ Club:</strong> {stats.team}</p>
-              <p><strong>📍 Position:</strong> {stats.position}</p>
-              <p><strong>🌍 Country:</strong> {stats.country}</p>
-              <p><strong>🔢 Number:</strong> {stats.number}</p>
-            </div>
-          </div>
-          <p><strong>⚽ Goals:</strong> {stats.goals}</p>
-          <p><strong>🎯 Assists:</strong> {stats.assists}</p>
-          <p><strong>⭐ Fantasy Points:</strong> {stats.fantasyPoints}</p>
-
-          <div className="meter-container">
-            <label>Fantasy Investment Meter</label>
-            <div className="meter-bar-bg">
-              <div className="meter-bar-fill" style={{ width: `${fantasyPercent}%` }} />
-            </div>
-            <p className="meter-text">
-              {fantasyPercent >= 80
-                ? "Top pick"
-                : fantasyPercent >= 50
-                ? "Good option"
-                : "Consider others"}
-            </p>
-          </div>
-        </div>
-      )}
+    <div className="p-4 max-w-2xl mx-auto">
+      <Link to="/" className="text-blue-500 hover:underline">&larr; Back</Link>
+      <h2 className="text-2xl font-bold mt-4 mb-2">{player.Name}</h2>
+      <p><strong>Goals:</strong> {player.Goals}</p>
+      <p><strong>Assists:</strong> {player.Assists}</p>
+      <p><strong>Yellow Cards:</strong> {player.YellowCards}</p>
+      <p><strong>Red Cards:</strong> {player.RedCards}</p>
+      <p className="text-xl mt-4 font-semibold">Fantasy Points: {player.fantasyPoints}</p>
     </div>
   );
 }
 
-export default PlayerDetail;
