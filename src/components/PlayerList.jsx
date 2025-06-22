@@ -28,13 +28,13 @@ export default function PlayerList() {
 
   return (
     <div className="container text-center">
-      <h1 className="text-4xl font-bold mb-6 text-white flex items-center justify-center gap-3">
+      <h1 className="text-4xl font-bold mb-6 text-white flex justify-center items-center gap-3">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/852/852318.png"
-          alt="Football"
+          src="https://cdn-icons-png.flaticon.com/512/919/919836.png"
+          alt="Football Icon"
           className="w-10 h-10"
         />
-        Premier League Fantasy Tracker
+        <span>Premier League Fantasy Tracker</span>
       </h1>
 
       <input
@@ -42,15 +42,16 @@ export default function PlayerList() {
         placeholder="Search players..."
         value={search}
         onChange={e => setSearch(e.target.value)}
+        className="p-3 border w-full rounded mb-6 text-lg bg-gray-800 text-white border-gray-600"
       />
 
       {loading ? (
         <p className="text-white mt-6">Loading players...</p>
       ) : (
         <>
-          <ul className="shadow mb-4">
+          <ul className="divide-y rounded bg-[#1e1e1e] shadow overflow-hidden">
             {paginated.map(player => (
-              <li key={player.Player}>
+              <li key={player.Player} className="py-4 px-6 hover:bg-gray-700 transition-all">
                 <Link
                   to={`/player/${encodeURIComponent(player.Player)}`}
                   className="text-lg font-semibold text-blue-400 hover:text-cyan-300 transition-all duration-200"
@@ -65,7 +66,7 @@ export default function PlayerList() {
             <button
               disabled={page === 1}
               onClick={() => setPage(p => p - 1)}
-              className="btn"
+              className="bg-gradient-to-r from-gray-600 to-gray-800 px-5 py-2 rounded-lg text-white font-semibold shadow hover:scale-105 transition disabled:opacity-50"
             >
               ⬅ Previous
             </button>
@@ -75,7 +76,7 @@ export default function PlayerList() {
             <button
               disabled={page === totalPages}
               onClick={() => setPage(p => p + 1)}
-              className="btn"
+              className="bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-lg text-white font-semibold shadow hover:scale-105 transition disabled:opacity-50"
             >
               Next ➡
             </button>
