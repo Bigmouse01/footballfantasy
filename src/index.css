@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f6fa;
+  background-color: #ecf0f1;
   color: #2f3640;
 }
 
@@ -20,10 +20,10 @@ h1, h2 {
 }
 
 input[type="text"] {
-  padding: 10px;
+  padding: 12px;
   width: 100%;
   border: 1px solid #dcdde1;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 16px;
   box-sizing: border-box;
 }
