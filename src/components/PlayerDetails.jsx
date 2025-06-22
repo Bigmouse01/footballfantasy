@@ -23,47 +23,55 @@ export default function PlayerDetails() {
     return { label: '❌ Avoid', color: 'text-red-500', bar: 'fantasy-low', bg: 'bg-red-900' };
   };
 
-  if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
-  if (!player) return <div className="p-4 text-white">Loading...</div>;
+  if (error) return <div className="p-4 text-red-500 text-center">Error: {error}</div>;
+  if (!player) return <div className="p-4 text-white text-center">Loading...</div>;
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
   const wikiLink = `https://en.wikipedia.org/wiki/${encodeURIComponent(player.Player.replaceAll(' ', '_'))}`;
 
   return (
-    <div className={`p-6 max-w-3xl mx-auto shadow-lg rounded-xl text-white transition-colors duration-500 ${verdict.bg}`}>
-      <Link to="/" className="text-blue-400 hover:underline">&larr; Back</Link>
-      <div className="flex flex-col items-center text-center gap-6 mt-6 transition-all duration-700">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold mb-2">{player.Player}</h2>
-          <a
-            href={wikiLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-blue-300 hover:underline"
-          >
-            📖 View on Wikipedia
-          </a>
-          <div className="mt-4 text-lg space-y-2">
-            <p className="transition-all"><strong className="text-gray-400">🏷️ Team:</strong> {player.Team || 'N/A'}</p>
-            <p className="transition-all"><strong className="text-gray-400">⚽ Goals:</strong> {player.Gls}</p>
-            <p className="transition-all"><strong className="text-gray-400">🎯 Assists:</strong> {player.Ast}</p>
-            <p className="transition-all"><strong className="text-gray-400">🟨 Yellow Cards:</strong> {player.CrdY}</p>
-            <p className="transition-all"><strong className="text-gray-400">🟥 Red Cards:</strong> {player.CrdR}</p>
-          </div>
-        </div>
+    <div className={`p-6 max-w-3xl mx-auto shadow-xl rounded-xl text-white transition-colors duration-500 ${verdict.bg}`}>
+      <div className="w-full flex justify-center mb-6">
+        <Link
+          to="/"
+          className="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-2 px-6 rounded-lg shadow hover:scale-105 transition-all"
+        >
+          ⬅ Back to Player List
+        </Link>
       </div>
-      <div className="mt-6 text-xl group">
-        <p><strong>Fantasy Points:</strong> <span className="font-semibold">{player.fantasyPoints}</span></p>
-        <div className="fantasy-meter overflow-hidden relative">
-          <div
-            className={`fantasy-meter-bar ${verdict.bar}`}
-            style={{
-              width: `${Math.min(player.fantasyPoints / 2, 100)}%`,
-              transition: 'width 1s ease-out'
-            }}
-          ></div>
+
+      <div className="text-center space-y-4 animate-fadeIn">
+        <h2 className="text-5xl font-extrabold tracking-tight text-white">{player.Player}</h2>
+        <a
+          href={wikiLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-base text-blue-300 hover:underline"
+        >
+          📖 View on Wikipedia
+        </a>
+
+        <div className="mt-8 space-y-3 text-lg">
+          <p><span className="text-gray-300 font-semibold">🏷️ Team:</span> {player.Team || 'N/A'}</p>
+          <p><span className="text-gray-300 font-semibold">⚽ Goals:</span> {player.Gls}</p>
+          <p><span className="text-gray-300 font-semibold">🎯 Assists:</span> {player.Ast}</p>
+          <p><span className="text-gray-300 font-semibold">🟨 Yellow Cards:</span> {player.CrdY}</p>
+          <p><span className="text-gray-300 font-semibold">🟥 Red Cards:</span> {player.CrdR}</p>
         </div>
-        <p className={`mt-2 font-bold ${verdict.color} group-hover:scale-105 transition-transform duration-300`}>{verdict.label}</p>
+
+        <div className="mt-10">
+          <p className="text-xl font-medium">Fantasy Points: <span className="font-semibold">{player.fantasyPoints}</span></p>
+          <div className="fantasy-meter overflow-hidden relative mt-2">
+            <div
+              className={`fantasy-meter-bar ${verdict.bar}`}
+              style={{
+                width: `${Math.min(player.fantasyPoints / 2, 100)}%`,
+                transition: 'width 1s ease-out'
+              }}
+            ></div>
+          </div>
+          <p className={`mt-2 font-bold ${verdict.color} transition-transform duration-300`}>{verdict.label}</p>
+        </div>
       </div>
     </div>
   );
