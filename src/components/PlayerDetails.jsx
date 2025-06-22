@@ -5,7 +5,6 @@ export default function PlayerDetails() {
   const { name } = useParams();
   const [player, setPlayer] = useState(null);
   const [error, setError] = useState(null);
-  const [photo, setPhoto] = useState('');
 
   useEffect(() => {
     fetch(`https://fantasybackend-psi.vercel.app/player?name=${encodeURIComponent(name)}`)
@@ -15,18 +14,6 @@ export default function PlayerDetails() {
       })
       .then(data => setPlayer(data))
       .catch(err => setError(err.message));
-  }, [name]);
-
-  useEffect(() => {
-    if (!name) return;
-    fetch(`https://fantasybackend-psi.vercel.app/player-photo?name=${encodeURIComponent(name)}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.photo) {
-          setPhoto(data.photo);
-        }
-      })
-      .catch(err => console.error('Image fetch error:', err));
   }, [name]);
 
   const getInvestmentVerdict = (points) => {
@@ -40,19 +27,12 @@ export default function PlayerDetails() {
   if (!player) return <div className="p-4 text-white">Loading...</div>;
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
-  const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(player.Player)}&background=0D8ABC&color=fff&size=110`;
 
   return (
     <div className={`p-6 max-w-3xl mx-auto shadow-lg rounded-xl text-white transition-colors duration-500 ${verdict.bg}`}>
       <Link to="/" className="text-blue-400 hover:underline">&larr; Back</Link>
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mt-6">
-        <img
-          src={photo || fallback}
-          onError={(e) => { e.target.onerror = null; e.target.src = fallback; }}
-          alt={player.Player}
-          className="w-32 h-40 object-cover rounded-lg border border-gray-600"
-        />
-        <div className="text-center md:text-left">
+      <div className="flex flex-col items-center text-center gap-6 mt-6">
+        <div className="text-center">
           <h2 className="text-3xl font-bold mb-2">{player.Player}</h2>
           <p className="text-gray-400"><strong>Team:</strong> {player.Team || 'N/A'}</p>
           <p><strong>Goals:</strong> {player.Gls}</p>

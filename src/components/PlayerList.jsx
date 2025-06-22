@@ -28,28 +28,21 @@ export default function PlayerList() {
 
   return (
     <div className="container text-center">
-      <h1 className="text-4xl font-bold mb-6 text-white flex justify-center items-center gap-3">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/919/919836.png"
-          alt="Football Icon"
-          className="w-10 h-10"
-        />
-        <span>Premier League Fantasy Tracker</span>
-      </h1>
+      <h1 className="text-4xl font-bold mb-6 text-white">Premier League Fantasy Tracker</h1>
 
       <input
         type="text"
         placeholder="Search players..."
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="p-3 border w-full rounded mb-6 text-lg bg-gray-800 text-white border-gray-600"
+        className="p-3 w-full max-w-xl mx-auto mb-6 text-lg bg-gray-800 text-white border border-gray-600 rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       {loading ? (
         <p className="text-white mt-6">Loading players...</p>
       ) : (
         <>
-          <ul className="divide-y rounded bg-[#1e1e1e] shadow overflow-hidden">
+          <ul className="rounded-xl overflow-hidden shadow-xl divide-y divide-gray-700 bg-[#1e1e1e] max-w-xl mx-auto">
             {paginated.map(player => (
               <li key={player.Player} className="py-4 px-6 hover:bg-gray-700 transition-all">
                 <Link
