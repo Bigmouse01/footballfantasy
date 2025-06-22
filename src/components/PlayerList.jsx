@@ -20,33 +20,47 @@ export default function PlayerList() {
       .finally(() => setLoading(false));
   }, []);
 
-  const filtered = players.filter(p => p.Player?.toLowerCase().includes(search.toLowerCase()));
+  const filtered = players.filter(p =>
+    p.Player?.toLowerCase().includes(search.toLowerCase())
+  );
   const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.ceil(filtered.length / pageSize);
 
   return (
     <div className="container text-center">
-      <h1 className="text-4xl font-bold mb-6 text-white">⚽ Premier League Fantasy Tracker</h1>
+      <h1 className="text-4xl font-bold mb-6 text-white flex items-center justify-center gap-3">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/852/852318.png"
+          alt="Football"
+          className="w-10 h-10"
+        />
+        Premier League Fantasy Tracker
+      </h1>
+
       <input
         type="text"
         placeholder="Search players..."
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="text-lg mb-6"
       />
+
       {loading ? (
-        <p className="text-white">Loading players...</p>
+        <p className="text-white mt-6">Loading players...</p>
       ) : (
         <>
           <ul className="shadow mb-4">
             {paginated.map(player => (
               <li key={player.Player}>
-                <Link to={`/player/${encodeURIComponent(player.Player)}`} className="text-xl font-semibold text-blue-400 hover:text-blue-300 transition">
+                <Link
+                  to={`/player/${encodeURIComponent(player.Player)}`}
+                  className="text-lg font-semibold text-blue-400 hover:text-cyan-300 transition-all duration-200"
+                >
                   {player.Player}
                 </Link>
               </li>
             ))}
           </ul>
+
           <div className="flex justify-center items-center gap-6 mt-8">
             <button
               disabled={page === 1}
@@ -55,7 +69,9 @@ export default function PlayerList() {
             >
               ⬅ Previous
             </button>
-            <span className="text-white text-lg">Page {page} of {totalPages}</span>
+            <span className="text-white text-lg">
+              Page {page} of {totalPages}
+            </span>
             <button
               disabled={page === totalPages}
               onClick={() => setPage(p => p + 1)}
