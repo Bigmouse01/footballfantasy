@@ -27,18 +27,29 @@ export default function PlayerDetails() {
   if (!player) return <div className="p-4 text-white">Loading...</div>;
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
+  const wikiLink = `https://en.wikipedia.org/wiki/${encodeURIComponent(player.Player.replaceAll(' ', '_'))}`;
 
   return (
     <div className={`p-6 max-w-3xl mx-auto shadow-lg rounded-xl text-white transition-colors duration-500 ${verdict.bg}`}>
       <Link to="/" className="text-blue-400 hover:underline">&larr; Back</Link>
-      <div className="flex flex-col items-center text-center gap-6 mt-6">
+      <div className="flex flex-col items-center text-center gap-6 mt-6 transition-all duration-700">
         <div className="text-center">
-          <h2 className="text-3xl font-bold mb-2">{player.Player}</h2>
-          <p className="text-gray-400"><strong>Team:</strong> {player.Team || 'N/A'}</p>
-          <p><strong>Goals:</strong> {player.Gls}</p>
-          <p><strong>Assists:</strong> {player.Ast}</p>
-          <p><strong>Yellow Cards:</strong> {player.CrdY}</p>
-          <p><strong>Red Cards:</strong> {player.CrdR}</p>
+          <h2 className="text-4xl font-bold mb-2">{player.Player}</h2>
+          <a
+            href={wikiLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-blue-300 hover:underline"
+          >
+            📖 View on Wikipedia
+          </a>
+          <div className="mt-4 text-lg space-y-2">
+            <p className="transition-all"><strong className="text-gray-400">🏷️ Team:</strong> {player.Team || 'N/A'}</p>
+            <p className="transition-all"><strong className="text-gray-400">⚽ Goals:</strong> {player.Gls}</p>
+            <p className="transition-all"><strong className="text-gray-400">🎯 Assists:</strong> {player.Ast}</p>
+            <p className="transition-all"><strong className="text-gray-400">🟨 Yellow Cards:</strong> {player.CrdY}</p>
+            <p className="transition-all"><strong className="text-gray-400">🟥 Red Cards:</strong> {player.CrdR}</p>
+          </div>
         </div>
       </div>
       <div className="mt-6 text-xl group">
