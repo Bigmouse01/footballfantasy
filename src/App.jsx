@@ -55,10 +55,13 @@ function App() {
               <p><strong>👤 Name:</strong> {stats.name}</p>
               <p><strong>🏟️ Team:</strong> {stats.team}</p>
               <p><strong>📍 Position:</strong> {stats.position}</p>
+              <p><strong>🌍 Country:</strong> {stats.country}</p>
+              <p><strong>#️⃣ Number:</strong> {stats.number}</p>
             </div>
           </div>
 
-          <p><strong>📊 Goals per Game:</strong> {stats.odds}</p>
+          <p><strong>⚽ Goals:</strong> {stats.goals}</p>
+          <p><strong>🎯 Assists:</strong> {stats.assists}</p>
           <p><strong>⭐ Fantasy Points:</strong> {stats.fantasyPoints}</p>
 
           <div className="meter-container">
@@ -84,4 +87,3 @@ function App() {
 }
 
 export default App;
-
