@@ -13,9 +13,7 @@ export default function PlayerDetails() {
         if (!res.ok) throw new Error('Player not found');
         return res.json();
       })
-      .then(data => {
-        setPlayer(data);
-      })
+      .then(data => setPlayer(data))
       .catch(err => setError(err.message));
   }, [name]);
 
@@ -24,7 +22,10 @@ export default function PlayerDetails() {
     fetch(`https://fantasybackend-psi.vercel.app/player-photo?name=${encodeURIComponent(name)}`)
       .then(res => res.json())
       .then(data => {
-        if (data.photo) setPhoto(data.photo);
+        if (data.photo) {
+          setPhoto(data.photo);
+          console.log("Fetched photo:", data.photo);
+        }
       })
       .catch(err => console.error('Image fetch error:', err));
   }, [name]);
@@ -48,6 +49,7 @@ export default function PlayerDetails() {
       <div className="flex items-center space-x-6 mt-6">
         <img
           src={photo || fallback}
+          onError={(e) => { e.target.onerror = null; e.target.src = fallback; }}
           alt={player.Player}
           className="w-28 h-36 object-cover rounded border"
         />
