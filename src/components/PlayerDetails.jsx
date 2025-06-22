@@ -29,7 +29,7 @@ export default function PlayerDetails() {
   if (!player) return <div className="p-4">Loading...</div>;
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
-  const key = player.Player?.toLowerCase();
+  const key = player.Player?.toLowerCase().trim();
   const photo = imageMap[key] || `https://ui-avatars.com/api/?name=${encodeURIComponent(player.Player)}&background=0D8ABC&color=fff&size=110`;
 
   return (

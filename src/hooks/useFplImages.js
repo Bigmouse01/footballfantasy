@@ -9,10 +9,14 @@ export function useFplImages() {
       .then(data => {
         const players = data.elements;
         const photos = {};
+
         players.forEach(p => {
           const fullName = `${p.first_name} ${p.second_name}`.toLowerCase();
+          const shortName = p.second_name.toLowerCase(); // also match by surname
           photos[fullName] = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${p.photo.replace('.jpg', '')}.png`;
+          photos[shortName] = photos[fullName]; // fallback for short match
         });
+
         setMap(photos);
       });
   }, []);
