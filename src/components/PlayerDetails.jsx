@@ -28,7 +28,6 @@ export default function PlayerDetails() {
 
   const verdict = getInvestmentVerdict(player.fantasyPoints);
   const wikiLink = `https://en.wikipedia.org/wiki/${encodeURIComponent(player.Player.replaceAll(' ', '_'))}`;
-  const headshotUrl = player.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(player.Player)}&background=0D8ABC&color=fff&size=256`;
 
   return (
     <div className={`p-6 max-w-3xl mx-auto shadow-xl rounded-xl text-white transition-colors duration-500 ${verdict.bg}`}>
@@ -51,14 +50,6 @@ export default function PlayerDetails() {
         >
           📖 View on Wikipedia
         </a>
-
-        <div className="flex justify-center">
-          <img
-            src={headshotUrl}
-            alt={`${player.Player} headshot`}
-            className="w-32 h-32 sm:w-40 sm:h-40 rounded-full shadow-md border-4 border-gray-700 object-cover transition-transform duration-300 hover:scale-105"
-          />
-        </div>
 
         <div className="mt-8 space-y-3 text-lg">
           <p><span className="text-gray-300 font-semibold">🏷️ Team:</span> {player.Team || 'N/A'}</p>
@@ -101,19 +92,21 @@ export default function PlayerDetails() {
         </div>
 
         {/* Fantasy Points Meter */}
-        <div className="mt-10">
+        <div className="mt-10 w-full">
           <p className="text-xl font-medium">Fantasy Points: <span className="font-semibold">{player.fantasyPoints}</span></p>
-          <div className="flex justify-center mt-2">
-            <div className="fantasy-meter w-1/2 relative overflow-hidden">
-              <div
-                className={`fantasy-meter-bar ${verdict.bar}`}
-                style={{
-                  width: `${Math.min(player.fantasyPoints / 2, 100)}%`,
-                  transition: 'width 1s ease-out'
-                }}
-              ></div>
-            </div>
+
+          <div className="w-full h-5 mt-2 rounded-full bg-gray-800 overflow-hidden shadow-inner">
+            <div
+              className={`${verdict.bar}`}
+              style={{
+                width: `${Math.min(player.fantasyPoints / 2, 100)}%`,
+                height: '100%',
+                transition: 'width 1s ease-out',
+                borderRadius: 'inherit'
+              }}
+            ></div>
           </div>
+
           <p className={`mt-2 font-bold ${verdict.color} transition-transform duration-300`}>{verdict.label}</p>
         </div>
       </div>
