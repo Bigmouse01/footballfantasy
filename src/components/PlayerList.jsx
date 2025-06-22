@@ -31,6 +31,29 @@ export default function PlayerList() {
     Wolverhampton: 'https://a.espncdn.com/i/teamlogos/soccer/500/380.png'
   };
 
+  const tableData = [
+    ['Manchester City', 38, 91],
+    ['Arsenal', 38, 89],
+    ['Liverpool', 38, 82],
+    ['Aston Villa', 38, 72],
+    ['Tottenham Hotspur', 38, 66],
+    ['Chelsea', 38, 63],
+    ['Newcastle United', 38, 60],
+    ['Manchester United', 38, 58],
+    ['West Ham United', 38, 52],
+    ['Crystal Palace', 38, 49],
+    ['Brighton & Hove Albion', 38, 48],
+    ['Bournemouth', 38, 48],
+    ['Fulham', 38, 47],
+    ['Wolverhampton Wanderers', 38, 46],
+    ['Everton', 38, 44],
+    ['Brentford', 38, 42],
+    ['Nottingham Forest', 38, 37],
+    ['Luton Town', 38, 33],
+    ['Burnley', 38, 24],
+    ['Sheffield United', 38, 16]
+  ];
+
   useEffect(() => {
     setLoading(true);
     fetch('https://fantasybackend-psi.vercel.app/players')
@@ -50,27 +73,43 @@ export default function PlayerList() {
   const totalPages = Math.ceil(filtered.length / pageSize);
 
   return (
-    <div className="min-h-screen bg-[#1e1e2f] text-white font-premier p-6">
-      <h1 className="text-4xl font-bold text-center text-purple-500 mb-8">
+    <div className="min-h-screen bg-[#1e1e2f] text-white font-premier p-6 relative">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg"
+        alt="Premier League Watermark"
+        className="absolute opacity-10 w-[70%] h-auto top-[20%] left-[15%] z-0"
+      />
+
+      <h1 className="text-4xl font-bold text-center text-purple-500 mb-8 relative z-10">
         Premier League Fantasy Tracker
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left: 2023 Season Table */}
-        <div className="bg-[#2a2a40] rounded-2xl p-4 shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-purple-400">2023 Season Table</h2>
-          <ul className="space-y-2 text-sm">
-            <li>1. Manchester City</li>
-            <li>2. Arsenal</li>
-            <li>3. Liverpool</li>
-            <li>4. Manchester United</li>
-            <li>5. Newcastle United</li>
-            <li>6. Tottenham Hotspur</li>
-          </ul>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10">
+        {/* Left: Full 2023 Season Table */}
+        <div className="md:col-span-2 bg-[#37003c] rounded-2xl p-4 shadow-lg overflow-auto">
+          <h2 className="text-2xl font-semibold mb-4 text-purple-300">2023 Season Table</h2>
+          <table className="w-full text-sm text-left">
+            <thead>
+              <tr className="text-purple-400 border-b border-purple-700">
+                <th className="py-2">Team</th>
+                <th className="py-2">P</th>
+                <th className="py-2">Pts</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map(([team, played, points]) => (
+                <tr key={team} className="border-b border-purple-800">
+                  <td className="py-1 pr-2 text-white">{team}</td>
+                  <td className="py-1 pr-2 text-white">{played}</td>
+                  <td className="py-1 text-white">{points}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         {/* Center: Player List */}
-        <div className="bg-[#2a2a40] rounded-2xl p-4 shadow-lg">
+        <div className="md:col-span-6 bg-[#2a2a40] rounded-2xl p-6 shadow-lg">
           <input
             type="text"
             placeholder="Search players..."
@@ -133,16 +172,18 @@ export default function PlayerList() {
         </div>
 
         {/* Right: YouTube Videos */}
-        <div className="bg-[#2a2a40] rounded-2xl p-4 shadow-lg">
+        <div className="md:col-span-4 bg-[#2a2a40] rounded-2xl p-4 shadow-lg">
           <h2 className="text-2xl font-semibold mb-4 text-purple-400">Highlights & Best Moments</h2>
           <div className="grid grid-cols-1 gap-4">
-            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/MjOfk_q9m1k" title="EPL 2023 Highlights 1" allowFullScreen></iframe>
-            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/YOaGHY3v73Y" title="EPL 2023 Highlights 2" allowFullScreen></iframe>
-            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/CnAmeh0-E-U" title="EPL Top Goals" allowFullScreen></iframe>
-            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/qXGl7VSTZXY" title="EPL Last-Minute Wins" allowFullScreen></iframe>
+            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/QFchGo1JLzU" title="EPL Highlight 1" allowFullScreen></iframe>
+            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/HeO1rTZiYrs" title="EPL Highlight 2" allowFullScreen></iframe>
+            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/0pv3rtRqR0k" title="EPL Highlight 3" allowFullScreen></iframe>
+            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/uxOuOqByfNw" title="EPL Highlight 4" allowFullScreen></iframe>
+            <iframe className="rounded-xl" width="100%" height="200" src="https://www.youtube.com/embed/QzP71At9oJ8" title="EPL Highlight 5" allowFullScreen></iframe>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
