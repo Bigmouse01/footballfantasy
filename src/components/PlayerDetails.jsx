@@ -21,15 +21,10 @@ export default function PlayerDetails() {
 
   useEffect(() => {
     if (!name) return;
-    fetch(`https://v3.football.api-sports.io/players?search=${encodeURIComponent(name)}&league=39&season=2023`, {
-      headers: {
-        'x-apisports-key': 'ac73f34a4e2b591d2c12ad067e4a157a'
-      }
-    })
+    fetch(`https://fantasybackend-psi.vercel.app/player-photo?name=${encodeURIComponent(name)}`)
       .then(res => res.json())
       .then(data => {
-        const img = data.response?.[0]?.player?.photo;
-        if (img) setPhoto(img);
+        if (data.photo) setPhoto(data.photo);
       })
       .catch(err => console.error('Image fetch error:', err));
   }, [name]);
