@@ -3,7 +3,6 @@
   text-align: center;
   background: linear-gradient(135deg, #1f2937, #111827);
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
 }
 
@@ -61,7 +60,6 @@
   margin: 2rem auto;
   text-align: left;
   max-width: 550px;
-  width: 100%;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
   line-height: 1.6;
   font-size: 1.15rem;
